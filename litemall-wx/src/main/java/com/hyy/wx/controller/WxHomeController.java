@@ -159,5 +159,18 @@ public class WxHomeController {
         }
         return mapList;
     }
+    /**
+     * 商城信息
+     * 项目名称，地址，电话号码，qq交流群
+     */
+    @RequestMapping("/about")
+    public Object about(){
+        Map<String,String> about=new HashMap<>();
+        about.put("name",SystemConfig.getLitemallName());
+        about.put("address",SystemConfig.getLitemallAddress());
+        about.put("phoneNumber",SystemConfig.getLitemallPhoneNumber());
+        about.put("qq",SystemConfig.getLitemallQQ());
+        return ResultUtil.ok(about);
+    }
 
 }

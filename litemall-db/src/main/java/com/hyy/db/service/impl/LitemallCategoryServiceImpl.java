@@ -9,7 +9,9 @@ import com.hyy.db.service.LitemallCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class LitemallCategoryServiceImpl implements LitemallCategoryService {
@@ -48,4 +50,23 @@ public class LitemallCategoryServiceImpl implements LitemallCategoryService {
         List<LitemallCategory> litemallCategoryList = litemallCategoryMapper.selectByExampleSelective(litemallCategoryExample, columns);
         return litemallCategoryList;
     }
+
+    @Override
+    public List<LitemallCategory> findAllNotFatherCategory() {
+        LitemallCategoryExample litemallCategoryExample=new LitemallCategoryExample();
+        litemallCategoryExample.or().andDeletedEqualTo(false).andPidEqualTo(0).andLevelEqualTo("L1");
+        List<LitemallCategory> litemallCategoryList = litemallCategoryMapper.selectByExampleSelective(litemallCategoryExample, columns);
+        return litemallCategoryList;
+    }
+
+    @Override
+    public LitemallCategory findById(Integer id) {
+        LitemallCategoryExample litemallCategoryExample=new LitemallCategoryExample();
+        litemallCategoryExample.or().andDeletedEqualTo(false);
+        LitemallCategory litemallCategory = litemallCategoryMapper.selectByPrimaryKeySelective(id, columns);
+
+        return litemallCategory;
+    }
+
+
 }

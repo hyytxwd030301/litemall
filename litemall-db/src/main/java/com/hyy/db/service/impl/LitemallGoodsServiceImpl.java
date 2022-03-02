@@ -66,5 +66,15 @@ public class LitemallGoodsServiceImpl implements LitemallGoodsService {
         return litemallGoodsList;
     }
 
+    @Override
+    public Integer count() {
+        LitemallGoodsExample litemallGoodsExample=new LitemallGoodsExample();
+        litemallGoodsExample.or().andDeletedEqualTo(false).andIsOnSaleEqualTo(true);
+        PageHelper.startPage(1,10);
+        Page<LitemallGoods> litemallGoodsPage= (Page<LitemallGoods>) litemallGoodsMapper.selectByExampleSelective(litemallGoodsExample,columns);
+        Integer count = Math.toIntExact(litemallGoodsPage.getTotal());
+        return count;
+    }
+
 
 }

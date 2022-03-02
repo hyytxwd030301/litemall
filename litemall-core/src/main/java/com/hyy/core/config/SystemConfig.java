@@ -11,7 +11,7 @@ public class SystemConfig {
     static String LITEMALL_ORDER_UNCONFIRM="litemall_order_unconfirm";
     static String LITEMALL_WX_SHARE="litemall_wx_share";
     static String LITEMALL_EXPRESS_FREIGHT_MIN="litemall_express_freight_min";
-    static String litemall_mall_name="litemall_mall_name";
+    static String LITEMALL_MALL_NAME="litemall_mall_name";
     static String LITEMALL_EXPRESS_FREIGHT_VALUE="litemall_express_freight_value";
     static String LITEMALL_MALL_QQ="litemall_mall_qq";
     static String LITEMALL_WX_INDEX_HOT="litemall_wx_index_hot";
@@ -32,6 +32,9 @@ public class SystemConfig {
       return Integer.parseInt(config.get(name));
 
     }
+    static String getStringValue(String name){
+        return config.get(name);
+    }
     public static Integer getBrand(){
         Integer value = getValue(LITEMALL_WX_INDEX_BRAND);
         return value;
@@ -49,5 +52,21 @@ public class SystemConfig {
     public static Integer getCategoryGoods() {
         Integer value = getValue(LITEMALL_WX_CATLOG_GOODS);
         return value;
+    }
+    public static String getLitemallName(){
+        String stringValue = getStringValue(LITEMALL_MALL_NAME);
+        return stringValue;
+    }
+    public static String getLitemallAddress(){
+        String stringValue = getStringValue(LITEMALL_MALL_ADDRESS);
+        return stringValue;
+    }
+    public static String getLitemallPhoneNumber(){
+        String stringValue = getStringValue(LITEMALL_MALL_PHONE);
+        return stringValue;
+    }
+    public static String getLitemallQQ(){
+        String stringValue = getStringValue(LITEMALL_MALL_QQ);
+        return stringValue;
     }
 }
