@@ -2,6 +2,7 @@ package com.hyy.db.service.impl;
 
 import com.github.pagehelper.Page;
 import com.github.pagehelper.PageHelper;
+import com.hyy.db.domain.LitemallCategoryExample;
 import com.hyy.db.domain.LitemallGoods;
 import com.hyy.db.domain.LitemallGoods.Column;
 import com.hyy.db.domain.LitemallGoodsExample;
@@ -62,6 +63,16 @@ public class LitemallGoodsServiceImpl implements LitemallGoodsService {
         litemallGoodsExample.or().andDeletedEqualTo(false).andIsOnSaleEqualTo(true).andIdIn(idList);
         PageHelper.startPage(page,size);
         litemallGoodsExample.setOrderByClause("add_time desc");
+        List<LitemallGoods> litemallGoodsList = litemallGoodsMapper.selectByExampleSelective(litemallGoodsExample, columns);
+        return litemallGoodsList;
+    }
+
+    @Override
+    public List<LitemallGoods> findGoodsById(Integer categoryId,Integer page,Integer size) {
+        LitemallGoodsExample litemallGoodsExample=new LitemallGoodsExample();
+        litemallGoodsExample.or().andDeletedEqualTo(false).andIsOnSaleEqualTo(true).andCategoryIdEqualTo(categoryId);
+
+        PageHelper.startPage(page,size);
         List<LitemallGoods> litemallGoodsList = litemallGoodsMapper.selectByExampleSelective(litemallGoodsExample, columns);
         return litemallGoodsList;
     }
