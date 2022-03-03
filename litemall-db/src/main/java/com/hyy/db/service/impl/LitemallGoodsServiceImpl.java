@@ -78,6 +78,24 @@ public class LitemallGoodsServiceImpl implements LitemallGoodsService {
     }
 
     @Override
+    public LitemallGoods findGoodById(Integer id) {
+        LitemallGoodsExample litemallGoodsExample=new LitemallGoodsExample();
+        litemallGoodsExample.or().andDeletedEqualTo(false);
+        LitemallGoods litemallGoods = litemallGoodsMapper.selectByPrimaryKeySelective(id, columns);
+        return litemallGoods;
+    }
+
+    @Override
+    public List<LitemallGoods> findByCategoryId(Integer categoryId,Integer page,Integer size) {
+        LitemallGoodsExample litemallGoodsExample=new LitemallGoodsExample();
+        litemallGoodsExample.or().andDeletedEqualTo(false).andCategoryIdEqualTo(categoryId);
+        PageHelper.startPage(page,size);
+        litemallGoodsExample.setOrderByClause("add_time desc");
+        List<LitemallGoods> litemallGoodsList = litemallGoodsMapper.selectByExampleSelective(litemallGoodsExample, columns);
+        return litemallGoodsList;
+    }
+
+    @Override
     public Integer count() {
         LitemallGoodsExample litemallGoodsExample=new LitemallGoodsExample();
         litemallGoodsExample.or().andDeletedEqualTo(false).andIsOnSaleEqualTo(true);

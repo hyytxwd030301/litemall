@@ -1,11 +1,11 @@
 package com.hyy.wx.controller;
 
+import com.github.pagehelper.Page;
+import com.hyy.core.config.SystemConfig;
 import com.hyy.core.util.ResultUtil;
-import com.hyy.db.domain.LitemallCategory;
-import com.hyy.db.domain.LitemallGoods;
+import com.hyy.db.domain.*;
 import com.hyy.db.mapper.LitemallGoodsMapper;
-import com.hyy.db.service.LitemallCategoryService;
-import com.hyy.db.service.LitemallGoodsService;
+import com.hyy.db.service.*;
 import com.sun.istack.internal.NotNull;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +24,15 @@ public class WxGoodsController {
 
     @Autowired
     private LitemallCategoryService litemallCategoryService;
+
+    @Autowired
+    private LitemallGoodsAttributeService litemallGoodsAttributeService;
+
+    @Autowired
+    private LitemallIssueService litemallIssueService;
+
+    @Autowired
+    private LitemallGoodsSpecificationService litemallGoodsSpecificationService;
 
     @RequestMapping("/count")
     public Object count(){
@@ -73,6 +82,43 @@ public class WxGoodsController {
         goodsMap.put("litemallCategory",litemallCategory);
         return ResultUtil.ok(goodsMap);
 
+    }
+
+    /**
+     * 通过物品id查询信息
+     * @param id
+     * @return
+     */
+    @RequestMapping("/detail")
+    public Object detail(Integer id){
+        Map<String,Object> goodsMap=new HashMap<>();
+        LitemallGoods litemallGoods = litemallGoodsService.findGoodById(id);
+        List<LitemallGoodsAttribute> litemallGoodsAttributeList = litemallGoodsAttributeService.findByGoodsId(id);
+        List<LitemallIssue> litemallIssueList = litemallIssueService.findAll();
+        List<LitemallGoodsSpecification> litemallGoodsSpecificationList = litemallGoodsSpecificationService.findByGoodsId(id);
+
+        goodsMap.put("litemallGood",litemallGoods);
+        goodsMap.put("litemallGoodsAttributeList",litemallGoodsAttributeList);
+        goodsMap.put("litemallIssueList",litemallIssueList);
+        goodsMap.put("litemallGoodsSpecificationList",litemallGoodsSpecificationList);
+
+        return ResultUtil.ok(goodsMap);
+
+    }
+
+
+    /**
+     * 通过id查找与当前商品相关物品
+     * @param id
+     * @return
+     */
+    @RequestMapping("/related")
+    public Object related(Integer id){
+        Map<String,Object> goodsMap=new HashMap<>();
+        LitemallGoods litemallGood = litemallGoodsService.findGoodById(id);
+        Page<LitemallGoods> litemallGoodsPage = (Page<LitemallGoods>) litemallGoodsService.findByCategoryId(litemallGood.getCategoryId(), 1, 6);
+        goodsMap.put("litemallGoodsPage",litemallGoodsPage);
+        return ResultUtil.ok(goodsMap);
     }
 }
 
