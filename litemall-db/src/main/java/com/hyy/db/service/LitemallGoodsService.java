@@ -13,5 +13,6 @@ public interface LitemallGoodsService {
     List<LitemallGoods> findGoodsById(Integer categoryId,Integer page,Integer size);
     LitemallGoods findGoodById(Integer goodId);
     List<LitemallGoods> findByCategoryId(Integer categoryId,Integer page,Integer size);
+    List<LitemallGoods> findByBrandId(Integer brandId,Integer page,Integer size);
     Integer count();
 }

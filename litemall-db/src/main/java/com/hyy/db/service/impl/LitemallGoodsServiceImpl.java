@@ -96,6 +96,16 @@ public class LitemallGoodsServiceImpl implements LitemallGoodsService {
     }
 
     @Override
+    public List<LitemallGoods> findByBrandId(Integer brandId, Integer page, Integer size) {
+        LitemallGoodsExample litemallGoodsExample=new LitemallGoodsExample();
+        litemallGoodsExample.or().andDeletedEqualTo(false).andBrandIdEqualTo(brandId).andIsOnSaleEqualTo(true);
+        litemallGoodsExample.setOrderByClause("add_time desc");
+        PageHelper.startPage(page,size);
+        List<LitemallGoods> litemallGoodsList = litemallGoodsMapper.selectByExampleSelective(litemallGoodsExample, columns);
+        return litemallGoodsList;
+    }
+
+    @Override
     public Integer count() {
         LitemallGoodsExample litemallGoodsExample=new LitemallGoodsExample();
         litemallGoodsExample.or().andDeletedEqualTo(false).andIsOnSaleEqualTo(true);

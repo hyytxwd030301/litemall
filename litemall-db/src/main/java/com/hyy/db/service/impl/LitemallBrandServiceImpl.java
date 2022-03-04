@@ -38,4 +38,10 @@ public class LitemallBrandServiceImpl implements LitemallBrandService {
         List<LitemallBrand> litemallBrandList = litemallBrandMapper.selectByExampleSelective(litemallBrandExample,columns);
         return litemallBrandList;
     }
+
+    @Override
+    public LitemallBrand findById(Integer id) {
+        LitemallBrand litemallBrand = litemallBrandMapper.selectByPrimaryKeySelective(id, columns);
+        return litemallBrand;
+    }
 }
