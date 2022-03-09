@@ -22,4 +22,13 @@ public class LitemallProductServiceImpl implements LitemallProductService {
         List<LitemallGoodsProduct> litemallGoodsProductList = litemallGoodsProductMapper.selectByExample(litemallGoodsProductExample);
         return litemallGoodsProductList;
     }
+
+    @Override
+    public LitemallGoodsProduct findByProductId(Integer productId) {
+        LitemallGoodsProduct litemallGoodsProduct = litemallGoodsProductMapper.selectByPrimaryKey(productId);
+        return litemallGoodsProduct;
+
+    }
+
+
 }
