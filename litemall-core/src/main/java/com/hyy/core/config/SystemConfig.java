@@ -69,4 +69,8 @@ public class SystemConfig {
         String stringValue = getStringValue(LITEMALL_MALL_QQ);
         return stringValue;
     }
+    public static String getLitemallMallAddress(){
+        String stringValue = getStringValue(LITEMALL_MALL_ADDRESS);
+        return stringValue;
+    }
 }

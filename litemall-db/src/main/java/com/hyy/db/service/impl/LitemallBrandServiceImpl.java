@@ -1,5 +1,6 @@
 package com.hyy.db.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.hyy.db.domain.LitemallBrand;
 import com.hyy.db.domain.LitemallBrand.Column;
 import com.hyy.db.domain.LitemallBrandExample;
@@ -33,8 +34,7 @@ public class LitemallBrandServiceImpl implements LitemallBrandService {
         if (sort!=null&&order!=null){
             litemallBrandExample.setOrderByClause(sort+" "+order);
         }
-
-
+        PageHelper.startPage(page,size);
         List<LitemallBrand> litemallBrandList = litemallBrandMapper.selectByExampleSelective(litemallBrandExample,columns);
         return litemallBrandList;
     }

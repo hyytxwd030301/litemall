@@ -8,6 +8,7 @@ import com.hyy.db.domain.LitemallUser;
 import com.hyy.db.service.LitemallUserService;
 import com.hyy.wx.VO.UserInfo;
 import com.hyy.wx.VO.WxLogInInfo;
+import com.hyy.wx.annotation.LoginUser;
 import com.hyy.wx.util.WxJwtUtil;
 import me.chanjar.weixin.common.error.WxErrorException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -84,6 +85,14 @@ public class WxAuthController {
         map.put("token",token);
         map.put("userInfo",userInfo);
         return ResultUtil.ok(map);
+    }
+
+    @RequestMapping("/logout")
+    public Object logout(@LoginUser Integer userId){
+        if (userId==null){
+            return ResultUtil.unlogin();
+        }
+        return ResultUtil.ok();
     }
 
 }
