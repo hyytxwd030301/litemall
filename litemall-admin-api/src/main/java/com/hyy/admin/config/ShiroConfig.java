@@ -1,12 +1,14 @@
 package com.hyy.admin.config;
 
 import com.hyy.admin.shiro.AdminAuthorizingRealm;
+import com.hyy.admin.shiro.AdminWebSessionManager;
 import org.apache.shiro.authc.credential.CredentialsMatcher;
 import org.apache.shiro.authc.credential.HashedCredentialsMatcher;
 import org.apache.shiro.realm.Realm;
 import org.apache.shiro.spring.web.ShiroFilterFactoryBean;
 import org.apache.shiro.web.mgt.DefaultWebSecurityManager;
 import org.apache.shiro.web.servlet.ShiroFilter;
+import org.apache.shiro.web.session.mgt.DefaultWebSessionManager;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 
@@ -29,9 +31,10 @@ public class ShiroConfig {
 
     @Bean
     //创建权限管理器
-    public DefaultWebSecurityManager getDefaultWebSecurityManager(Realm realm){
+    public DefaultWebSecurityManager getDefaultWebSecurityManager(Realm realm,DefaultWebSessionManager defaultWebSessionManager){
         DefaultWebSecurityManager securityManager = new DefaultWebSecurityManager();
         securityManager.setRealm(realm);
+        securityManager.setSessionManager(defaultWebSessionManager);
         return securityManager;
     }
 
@@ -43,5 +46,11 @@ public class ShiroConfig {
         credentialsMatcher.setHashIterations(1024);
         realm.setCredentialsMatcher(credentialsMatcher);
         return realm;
+    }
+
+    @Bean
+    public DefaultWebSessionManager getDefaultWebSessionManager(){
+        AdminWebSessionManager defaultWebSessionManger = new AdminWebSessionManager();
+        return defaultWebSessionManger;
     }
 }

@@ -71,4 +71,23 @@ public class LitemallCollectServiceImpl implements LitemallCollectService {
         List<LitemallCollect> litemallCollectList = litemallCollectMapper.selectByExample(litemallCollectExample);
         return litemallCollectList;
     }
+
+    @Override
+    public List<LitemallCollect> findAll(Integer userId,Integer valueId,Integer page, Integer size, String sort, String order) {
+
+        LitemallCollectExample litemallCollectExample=new LitemallCollectExample();
+        LitemallCollectExample.Criteria criteria = litemallCollectExample.or();
+        System.out.println(userId);
+        if (userId!=null){
+            criteria.andUserIdEqualTo(userId);
+        }
+        if (valueId!=null){
+            criteria.andValueIdEqualTo(valueId);
+        }
+        litemallCollectExample = criteria.andDeletedEqualTo(false).example();
+        litemallCollectExample.setOrderByClause(sort+" " +order);
+        PageHelper.startPage(page,size);
+        List<LitemallCollect> litemallCollectList = litemallCollectMapper.selectByExample(litemallCollectExample);
+        return litemallCollectList;
+    }
 }

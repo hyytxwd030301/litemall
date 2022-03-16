@@ -11,4 +11,6 @@ public interface LitemallAddressService {
     public List<LitemallAddress> findAllByPageAndSize(Integer userId,Integer page,Integer size,String city);
     Boolean add(LitemallAddress litemallAddress);
 
+
+    List<LitemallAddress> findAll(Integer page, Integer size, String sort, String order);
 }

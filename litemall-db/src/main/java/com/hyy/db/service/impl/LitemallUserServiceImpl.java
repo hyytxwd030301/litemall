@@ -1,9 +1,12 @@
 package com.hyy.db.service.impl;
 
+import com.github.pagehelper.PageHelper;
 import com.hyy.db.domain.LitemallUser;
 import com.hyy.db.domain.LitemallUserExample;
+import com.hyy.db.domain.LitemallUserExample.Criteria;
 import com.hyy.db.mapper.LitemallUserMapper;
 import com.hyy.db.service.LitemallUserService;
+import org.apache.catalina.startup.Catalina;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -45,5 +48,18 @@ public class LitemallUserServiceImpl implements LitemallUserService {
         }
 
         return true;
+    }
+
+    @Override
+    public List<LitemallUser> findBySelective(Integer page, Integer size, String mobile, String sort, String order) {
+        LitemallUserExample litemallUserExample=new LitemallUserExample();
+        Criteria criteria = litemallUserExample.or();
+        if (!mobile.isEmpty()){
+            criteria.andMobileEqualTo(mobile);
+        }
+        litemallUserExample.setOrderByClause(sort+" "+order);
+        PageHelper.startPage(page,size);
+        List<LitemallUser> litemallUserList = litemallUserMapper.selectByExample(litemallUserExample);
+        return litemallUserList;
     }
 }

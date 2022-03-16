@@ -39,4 +39,16 @@ public class LitemallAddressServiceImpl implements LitemallAddressService {
 
         return true;
     }
+
+    @Override
+    public List<LitemallAddress> findAll(Integer page, Integer size, String sort, String order) {
+        LitemallAddressExample litemallAddressExample=new LitemallAddressExample();
+        litemallAddressExample.or().andDeletedEqualTo(false);
+        if (!sort.isEmpty()&&!order.isEmpty()){
+            litemallAddressExample.setOrderByClause(sort+" "+order);
+        }
+        PageHelper.startPage(page,size);
+        List<LitemallAddress> litemallAddressList = litemallAddressMapper.selectByExample(litemallAddressExample);
+        return litemallAddressList;
+    }
 }

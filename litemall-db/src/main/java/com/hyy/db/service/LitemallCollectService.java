@@ -13,4 +13,6 @@ public interface LitemallCollectService {
     LitemallCollect findByUserIdAndId(Integer userId,Integer valueId);
 
     List<LitemallCollect> findByPageAndSize(LitemallCollect litemallCollect,Integer page,Integer size);
+
+    List<LitemallCollect> findAll(Integer userId,Integer valueId,Integer page, Integer size, String sort, String order);
 }
